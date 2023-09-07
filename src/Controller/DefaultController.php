@@ -6,8 +6,10 @@ use App\Config\Core\Content;
 use App\Config\Core\Registry;
 use App\Config\Utilities\FileUploadManagement;
 use App\Entities\Post;
+use App\Mappers\CategoriesMapper;
 use App\Mappers\PostMapper;
 use App\Mappers\UserMapper;
+use App\Repositories\CategoriesRepository;
 use App\Repositories\PostRepository;
 use App\Repositories\UserRepository;
 use stdClass;
@@ -24,6 +26,8 @@ class DefaultController
   }
   public function index(Request $request)
   {
+    $categoryRepository = new CategoriesRepository(new CategoriesMapper());
+    $categories = $categoryRepository->getAllCategories();
     $session = Registry::get(Registry::SESSION);
     $page = strval($request->query->get('page') ?? 1);
     $pageNext = $page + 1;
@@ -32,15 +36,14 @@ class DefaultController
     $lifeTime = $session->get("lifeTime");
     if (time() > $lifeTime) {
       $session->destroy("username");
-      // header("Location: /login");
-      // return;
     }
-    // session_start();
     $hi = "Hello world";
 
     $username = $_SESSION["username"] ?? "";
+    $count = $this->postRepository->countArray();
+    $countMaxSizePage = ($count / 10);
     $posts = $this->postRepository->findByPage($page);
-    $content = Content::setContent('default', 'main', compact('hi', 'username', 'posts', 'page', 'pageNext', 'pagePreview'));
+    $content = Content::setContent('default', 'main', compact('categories', 'username', 'posts', 'countMaxSizePage', 'page', 'pageNext', 'pagePreview'));
     return new Response($content);
   }
   public function getPost(Request $request, int $id)

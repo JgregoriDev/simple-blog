@@ -62,6 +62,14 @@ $routes->add(
     methods: ["GET", "POST"],
   )
 );
+$routes->add(
+  'categoryListPost',
+  new Route(
+    path: '/category/{slug}',
+    defaults: ['_controller' => 'App\Controller\CategoryController::index'],
+    methods: ["GET", "POST"],
+  )
+);
 // $routes->add(
 //   'findUser',
 //   new Route(
