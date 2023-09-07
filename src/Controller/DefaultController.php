@@ -32,6 +32,7 @@ class DefaultController
     $page = strval($request->query->get('page') ?? 1);
     $pageNext = $page + 1;
     $pagePreview = $page - 1;
+    $pagePreview = $pagePreview < 1 ? 1 : $pagePreview;
     $page = $page < 1 ? 1 : $page;
     $lifeTime = $session->get("lifeTime");
     if (time() > $lifeTime) {
@@ -51,6 +52,7 @@ class DefaultController
     $session = Registry::get(Registry::SESSION);
     $username = $session->get("username") ?? "";
     $post = $this->postRepository->find($id);
+    $post = $this->postRepository->findPostsGenres($post);
     if ($username !== "") {
       if ($request->isMethod("post")) {
         $userRepository = new UserRepository(new UserMapper());

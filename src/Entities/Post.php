@@ -11,7 +11,7 @@ class Post
   private $created_at;
   private $image;
   private $comments;
-
+  private $categories;
   /**
    * Get the value of post_id
    */
@@ -116,6 +116,24 @@ class Post
   public function setImage($image): self
   {
     $this->image = $image;
+
+    return $this;
+  }
+
+  /**
+   * Get the value of categories
+   */
+  public function getCategories()
+  {
+    return $this->categories;
+  }
+
+  /**
+   * Set the value of categories
+   */
+  public function setCategories($categories): self
+  {
+    $this->categories = $categories;
 
     return $this;
   }

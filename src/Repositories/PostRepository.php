@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Entities\Post;
 use App\Mappers\PostMapper;
 
 class PostRepository
@@ -46,5 +47,10 @@ class PostRepository
   public function countArray()
   {
     return $this->postMapper->countArray();
+  }
+
+  public function findPostsGenres(Post $post)
+  {
+    return $this->postMapper->findPostsGenres($post);
   }
 }

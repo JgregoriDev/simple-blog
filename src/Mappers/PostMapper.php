@@ -4,6 +4,7 @@ namespace App\Mappers;
 
 use App\Config\Core\Connection;
 use App\Config\Interfaces\MapperInterface;
+use App\Entities\Categories;
 use App\Entities\Comment;
 use App\Entities\Post;
 use PDO;
@@ -39,6 +40,7 @@ class PostMapper extends Connection implements MapperInterface
     $post->setUserId($data[0]->user_id);
     $post->setContent($data[0]->content);
     $post->setCreatedAt($data[0]->created_at);
+    // var_dump($post, $data);
     if ($sizeArrayMessages > 0) {
       $arrayAux = [];
       foreach ($data as $commentSTD) {
@@ -52,6 +54,35 @@ class PostMapper extends Connection implements MapperInterface
       $post->setComments($arrayAux);
     }
     return $post;
+  }
+
+  public function findPostsGenres(Post $post)
+  {
+    $id = $post->getPostId();
+    $stmt = $this->getPdo()->prepare("SELECT COUNT(*) as size FROM post_category pc WHERE pc.id_post = :id");
+    $stmt->bindParam(":id", $id);
+    $stmt->execute();
+    $size = $stmt->fetchAll(PDO::FETCH_OBJ);
+    if ($size > 0) {
+
+      $stmt = $this->getPdo()->prepare("SELECT id_category, category
+        FROM posts p
+        INNER JOIN post_category pc ON p.post_id = pc.id_post
+        INNER JOIN categories c ON pc.id_category = c.id
+        WHERE p.post_id = ?;");
+      $stmt->execute([$post->getPostId()]);
+      $data = $stmt->fetchAll(PDO::FETCH_OBJ);
+      $categories = [];
+      foreach ($data as $categorySTD) {
+        $category = new Categories();
+        $category->setId($categorySTD->id_category);
+        $category->setNameCategory($categorySTD->category);
+        $categories[] = $category;
+      }
+      $post->setCategories($categories);
+      return $post;
+    }
+    return false;
   }
 
   public function findAll(): array
