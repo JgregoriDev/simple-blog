@@ -7,6 +7,7 @@ use App\Models\User;
 
 class UserRepository
 {
+
   private $userMapper;
   public function __construct(UserMapper $userMapper)
   {

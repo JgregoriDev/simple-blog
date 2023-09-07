@@ -42,4 +42,9 @@ class PostRepository
   {
     $post = $this->postMapper->delete($id);
   }
+
+  public function countArray()
+  {
+    return $this->postMapper->countArray();
+  }
 }

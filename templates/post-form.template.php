@@ -4,7 +4,10 @@
 
       <label for="contenido">Contenido:
       </label>
-      <input type="file" name="fileToUpload" id="fileToUpload">
+      <div class="mb-3">
+        <label for="form-label">Archivo</label>
+        <input type="file" class="form-control" name="fileToUpload" id="fileToUpload">
+      </div>
       <section>
         <div class="editor">
           <select name="editor__select editor__select" id="">
@@ -47,12 +50,12 @@
             </svg>
           </button>
         </div>
-        <di class="editor">
-          <textarea name="contenido" id="contenido" class="contenido" cols="30" rows="10"></textarea>
+        <di class="editor form-floating">
+          <textarea name="contenido" id="contenido" class="contenido form-control h-50" cols="30" rows="10"></textarea>
           <iframe class="resultado" id="resultado" frameborder="0"></iframe>
     </div>
     </section>
-    <input type="submit" value="Send data">
+    <input type="submit" class="btn btn-primary" value="Send data">
     <?php if ($postMessageStatus !== '') : ?>
       <small class="<?= $postMessageStatus["status"] ?>">
         <?= $postMessageStatus["post"] ?>
