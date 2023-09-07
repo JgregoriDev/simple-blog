@@ -4,12 +4,14 @@ namespace App\Entities;
 
 class User
 {
+  private const ROLE_USER = "[\"ROLE_USER\"]";
+  private const ROLE_ADMIN = "[\"ROLE_ADMIN\",\"ROLE_USER\"]";
   private $user_id;
   private $username;
   private $email;
   private $password_hash;
   private $created_at;
-
+  private $role;
   /**
    * Get the value of user_id
    */
@@ -98,5 +100,28 @@ class User
     $this->created_at = $created_at;
 
     return $this;
+  }
+
+  /**
+   * Get the value of role
+   */
+  public function getRole()
+  {
+    return $this->role;
+  }
+
+  /**
+   * Set the value of role
+   */
+  public function setRole($role): self
+  {
+    var_dump(json_encode($role, true));
+    $this->role = json_encode($role);
+
+    return $this;
+  }
+  public function isAdmin(): bool
+  {
+    return $this->getRole() === self::ROLE_ADMIN;
   }
 }

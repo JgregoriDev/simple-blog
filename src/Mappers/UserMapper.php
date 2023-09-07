@@ -20,13 +20,15 @@ class UserMapper extends Connection
 
   public function login(string $data)
   {
-    $stmt = $this->getPdo()->prepare("SELECT * FROM users WHERE username = :username");
+    $stmt = $this->getPdo()->prepare("SELECT username, password_hash,role FROM users WHERE username = :username");
     $stmt->bindParam(":username", $data);
     $stmt->execute();
     $userSTD = $stmt->fetch(PDO::FETCH_OBJ);
+    var_dump($userSTD);
     $user = new User();
     $user->setUsername($userSTD->username);
     $user->setPasswordHash($userSTD->password_hash);
+    $user->setRole($userSTD->role);
     return $user;
   }
   public function getIDUser(string $data)
@@ -54,11 +56,14 @@ class UserMapper extends Connection
   {
     $date = new DateTimeImmutable();
     $date = $date->format("Y-m-d");
-    $stmt = $this->getPdo()->prepare("INSERT INTO users (username, password_hash, email, created_at) VALUES (:username, :password, :email, :created_at)");
+    $role = json_encode(["ROLE_USER"], true);
+    $stmt = $this->getPdo()->prepare("INSERT INTO users (username, password_hash, email, created_at, role)
+    VALUES (:username, :password, :email, :created_at,:role)");
     $stmt->bindParam(":username", $username);
     $stmt->bindParam(":email", $username);
     $stmt->bindParam(":password", $password);
     $stmt->bindParam(":created_at", $date);
+    $stmt->bindParam(":role", $role);
     return $stmt->execute();
   }
 }

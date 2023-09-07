@@ -48,6 +48,7 @@ class LoginController
 
         $_SESSION["random_uuid"] = bin2hex(random_bytes(32));
         $session->set("username", $user->getUsername());
+        $session->set("role", $user->getRole());
         $session->set("lifeTime", time() + 604800);
         header("Location: /");
         return;

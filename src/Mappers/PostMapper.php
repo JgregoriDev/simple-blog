@@ -11,7 +11,7 @@ use PDOException;
 
 class PostMapper extends Connection implements MapperInterface
 {
-  public const LIMIT = 6;
+  public const LIMIT = 10;
 
   public function __construct()
   {
@@ -73,8 +73,18 @@ class PostMapper extends Connection implements MapperInterface
 
     return $arrayPost;
   }
+
+  public function countArray()
+  {
+    $stmt = $this->getPdo()->prepare("SELECT COUNT(*) as size FROM posts LIMIT 10");
+    $stmt->execute();
+    $size = $stmt->fetch();
+    return $size["size"];
+  }
   public function findByPage(int $page): array
   {
+
+
     $index = $page * self::LIMIT;
     $stmt = $this->getPdo()->prepare("SELECT * FROM posts LIMIT 10 OFFSET :limit");
     $stmt->bindParam(":limit", $index);
