@@ -1,0 +1,162 @@
+/* Interactive
+   ========================================================================== */
+
+/*
+ * Add the correct display in Edge, IE 10+, and Firefox.
+ */
+
+details {
+  display: block;
+}
+
+/*
+ * Add the correct display in all browsers.
+ */
+
+summary {
+  display: list-item;
+}
+
+/* Misc
+   ========================================================================== */
+
+/**
+ * Add the correct display in IE 10+.
+ */
+
+template {
+  display: none;
+}
+
+/**
+ * Add the correct display in IE 10.
+ */
+
+[hidden] {
+  display: none;
+}
+
+.message-error {
+  color: red;
+}
+.message-success {
+  color: green;
+}
+.title {
+  text-decoration: none;
+  /* color: aquamarine; */
+  font-style: 1.25em;
+}
+.form-flex {
+  display: flex;
+  width: 75dvw;
+  gap: 0.25em;
+  margin: 0 auto;
+  flex-direction: column;
+}
+.container {
+  margin-top: 1.5em;
+  width: 75dvw;
+  margin: 0 auto;
+}
+.form {
+}
+.form__container {
+  display: flex;
+  gap: 0.5em;
+  flex-direction: column;
+  margin-bottom: 1.5em;
+}
+
+.button {
+  padding: 0.25em 0.5em;
+  border-radius: 0.25em;
+  border: none;
+  background-color: aquamarine;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: bold;
+  color: black;
+  transition: 0.2s;
+  text-decoration: none;
+  text-align: center;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+.header__title {
+}
+.header__action {
+  display: flex;
+  align-items: center;
+  gap: 1.25em;
+  margin-right: 0.5em;
+}
+.header__user {
+  position: relative;
+  margin-right: 1em;
+  display: flex;
+  align-items: center;
+}
+.nav {
+  display: none;
+  position: absolute;
+  z-index: 10;
+  width: 100%;
+  top: 50px;
+
+  border: 1px black solid;
+  align-self: end;
+}
+.header__user:hover > .nav {
+  display: flex;
+}
+.nav__item {
+  list-style: none;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(200px, 1fr));
+  gap: 1.25em;
+}
+.article__title {
+  font-weight: bold;
+}
+.article__img {
+  width: 100%;
+  height: 23.4375em;
+}
+.grid__post {
+  margin: 1em 1em;
+}
+.nav__list {
+}
+.article {
+}
+.article__content {
+}
+.article__img {
+}
+.article__title {
+}
+.img {
+}
+
+.editor__button {
+  background-color: transparent;
+  border: none;
+  display: inline-block;
+  padding: 0 0.5em;
+  cursor: pointer;
+}
+.editor {
+  display: flex;
+}
+.contenido,
+.resultado {
+  width: 50%;
+  height: 385px;
+  display: inline-block;
+}

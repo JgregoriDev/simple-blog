@@ -1,0 +1,27 @@
+{
+  "name": "lpc/blog-simple",
+  "autoload": {
+    "psr-4": {
+      "App\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Josep Gregori",
+      "email": "josepgb13@gmail.com"
+    }
+  ],
+  "require": {
+    "symfony/http-kernel": "^6.3",
+    "symfony/http-foundation": "^6.3",
+    "symfony/routing": "^6.3",
+    "monolog/monolog": "^3.4",
+    "ext-gd": "*",
+    "s1syphos/php-simple-captcha": "^2.3",
+    "phpmailer/phpmailer": "^6.8",
+    "webmozart/assert": "^1.11"
+  },
+  "require-dev": {
+    "phpstan/phpstan": "^1.10"
+  }
+}
