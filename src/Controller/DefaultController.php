@@ -60,6 +60,7 @@ class DefaultController
         $stdObject = new stdClass();
         $post_id = $request->request->get("post_id");
         $content = $request->request->get("content");
+        $content = $request->request->get("category");
         if (!empty($post_id) && !empty($content)) {
           $post_id = htmlspecialchars($post_id);
           $comment = htmlspecialchars($content);
@@ -98,16 +99,17 @@ class DefaultController
 
   public function addPost(Request $request)
   {
-    $postMessageStatus = [];
-    $postMessageStatus["status"] = "";
-    $postMessageStatus["post"] = "";
+    $categoryRepository = new CategoriesRepository(new CategoriesMapper());
+    $categories = $categoryRepository->getAllCategories();
+    $postMessageStatus = [
+      "status" => "",
+      "post" => ""
+    ];
     $session = Registry::get(Registry::SESSION);
     $username = $session->get("username");
     $target_dir = "./assets/images/";
-
     $uploadOk = 1;
-
-    if ($session->get("username") === "") {
+    if ($username === "") {
       header("Location: login.php");
       return;
     }
@@ -119,6 +121,13 @@ class DefaultController
     $post = new Post();
     $postMessageStatus = ["status" => "", "post" => ""];
     if ($request->isMethod('post')) {
+      $selectedCategories = $_POST['categories'];
+      $arrayCategories = [];
+      foreach ($selectedCategories as $selectedCategory) {
+        $categoryObject = array_filter($categories, fn ($catObj) => (int)$selectedCategory == $catObj->getId());
+        $arrayCategories[] = $categoryObject;
+      }
+      var_dump($arrayCategories, $selectedCategories);
       $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
       $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
@@ -128,7 +137,10 @@ class DefaultController
         if ($fileUploadManagement->getStatusOfFileWasUploadSuccessfully($target_file)) {
 
           $postMessageStatus["post"] = "The file " . htmlspecialchars(basename($_FILES["fileToUpload"]["name"])) . " has been uploaded.";
+          $listOfCategories = $request->request->get("categories");
+          var_dump($listOfCategories);
           $post->setImage($_FILES["fileToUpload"]["name"])
+            ->setCategories($listOfCategories)
             ->setContent($request->request->get('contenido'))
             ->setUserId(2)
             ->setCreatedAt(new \DateTime());
@@ -141,7 +153,7 @@ class DefaultController
         }
       }
     }
-    $content = Content::setContent('post-form', 'main', compact('username', 'post', 'postMessageStatus'));
+    $content = Content::setContent('post-form', 'main', compact('username', 'categories', 'post', 'postMessageStatus'));
 
     return new Response($content);
   }
