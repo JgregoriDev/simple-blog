@@ -15,12 +15,12 @@ class FileUploadManagement
   private $uploadOk = -1;
   public function checkFileStatus(string $target_file, string $imageFileType)
   {
-    if (file_exists($target_file)) {
-      $this->postMessageStatus["post"] = "Sorry, file already exists.";
-      $this->postMessageStatus["status"] =  "message-error";
-      $this->uploadOk = 0;
-      $errorStatus = true;
-    }
+    // if (file_exists($target_file)) {
+    //   $this->postMessageStatus["post"] = "Sorry, file already exists.";
+    //   $this->postMessageStatus["status"] =  "message-error";
+    //   $this->uploadOk = 0;
+    //   $errorStatus = true;
+    // }
 
     if ($_FILES["fileToUpload"]["size"] > self::FILE_MAX_SIZE_ALLOWED) {
       $this->postMessageStatus["status"] =  "message-error";

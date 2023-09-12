@@ -6,6 +6,16 @@
   <?php if ($post->getImage() !== null) :  ?>
     <img class="article__img" class="img" src="<?= $post::IMAGE_PATH . $post->getImage() ?>" alt="<?= $post->getContent() ?>">
   <?php endif; ?>
+  <?php if (count($post->getCategories()) > 0) : ?>
+    <div class="d-flex">
+      <p>
+        Categories:
+        <?php foreach ($post->getCategories() as  $category) : ?>
+          <a class="me-3" href="/category/<?= $category->getNameCategory() ?>"><?= $category->getNameCategory() ?></a>
+        <?php endforeach; ?>
+      </p>
+    </div>
+  <?php endif; ?>
   <p class="article__content"><?= $post->getContent() ?></p>
 </article>
 <h2>Comments</h2>
@@ -16,7 +26,6 @@
     <section>
       <div class=" editor">
         <div class="mb-3">
-          <label for="" class="form-label">City</label>
           <select class="form-select form-select-lg" name="" id="">
             <option selected value="">Normal</option>
             <option value="h1">Heading 1</option>

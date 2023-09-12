@@ -121,13 +121,7 @@ class DefaultController
     $post = new Post();
     $postMessageStatus = ["status" => "", "post" => ""];
     if ($request->isMethod('post')) {
-      $selectedCategories = $_POST['categories'];
-      $arrayCategories = [];
-      foreach ($selectedCategories as $selectedCategory) {
-        $categoryObject = array_filter($categories, fn ($catObj) => (int)$selectedCategory == $catObj->getId());
-        $arrayCategories[] = $categoryObject;
-      }
-      var_dump($arrayCategories, $selectedCategories);
+
       $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
       $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
@@ -135,16 +129,29 @@ class DefaultController
       $postMessageStatus = $fileUploadManagement->checkFileStatus($target_file, $imageFileType);
       if ($fileUploadManagement->getUploadOk() === -1) {
         if ($fileUploadManagement->getStatusOfFileWasUploadSuccessfully($target_file)) {
+          // $postMessageStatus["status"] = "message-success";
+          // $postMessageStatus["post"] = "The file " . htmlspecialchars(basename($_FILES["fileToUpload"]["name"])) . " has been uploaded.";
 
-          $postMessageStatus["post"] = "The file " . htmlspecialchars(basename($_FILES["fileToUpload"]["name"])) . " has been uploaded.";
-          $listOfCategories = $request->request->get("categories");
-          var_dump($listOfCategories);
           $post->setImage($_FILES["fileToUpload"]["name"])
-            ->setCategories($listOfCategories)
+
             ->setContent($request->request->get('contenido'))
             ->setUserId(2)
             ->setCreatedAt(new \DateTime());
           $postStatus = $this->postRepository->insert($post);
+
+          $post->setPostId((int)$postStatus['pk']);
+          $selectedCategories = $_POST['categories'];
+          $arrayCategories = [];
+
+
+          foreach ($categories as $category) {
+            if (in_array($category->getId(), $selectedCategories)) {
+              $arrayCategories[] = $category;
+            }
+          }
+
+          $post->setCategories($arrayCategories);
+          $this->postRepository->insertCategories($post);
           $postMessageStatus["status"] = $postStatus["status"] ? "message-success" : "message-error";
           $postMessageStatus["post"] = $postStatus["status"] ? "Post creado de manera satisfactoria <a href=\"/post/{$postStatus['pk']}\">pulsa aquí para ver el resultado</a>" : "Error al crear el post";
         } else {

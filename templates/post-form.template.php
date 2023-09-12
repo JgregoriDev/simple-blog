@@ -1,12 +1,26 @@
 <main>
-  <form action="/new/post" enctype="multipart/form-data" method="post">
+  <form action="/new/post" id="formPost" enctype="multipart/form-data" method="post">
     <div class="form-flex">
 
-      <label for="contenido">Contenido:
-      </label>
+
       <div class="mb-3">
         <label for="form-label">Archivo</label>
         <input type="file" class="form-control" name="fileToUpload" id="fileToUpload">
+        <div class="my-2">
+
+          <img src="" id="preview" class="img-fluid my-2" alt="" srcset="">
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="" class="form-label">City</label>
+        <?php if (count($categories) > 0) : ?>
+          <select class="form-select form-select-lg" multiple="multiple" name="categories[]" id="">
+            <option selected>Select one</option>
+            <?php foreach ($categories as $category) : ?>
+              <option value="<?= $category->getId() ?>"><?= $category->getNameCategory() ?></option>
+            <?php endforeach; ?>
+          </select>
+        <?php endif; ?>
       </div>
       <section>
         <div class="editor">
@@ -50,18 +64,25 @@
             </svg>
           </button>
         </div>
-        <di class="editor form-floating">
-          <textarea name="contenido" id="contenido" class="contenido form-control h-50" cols="30" rows="10"></textarea>
-          <iframe class="resultado" id="resultado" frameborder="0"></iframe>
-    </div>
-    </section>
-    <input type="submit" class="btn btn-primary" value="Send data">
-    <?php if ($postMessageStatus !== '') : ?>
-      <small class="<?= $postMessageStatus["status"] ?>">
-        <?= $postMessageStatus["post"] ?>
-      </small>
-    <?php endif; ?>
-    <script src="/assets/js/editMarkdown.js" type="module" defer></script>
+        <div class="mt-2 form-floating">
+          <textarea name="contenido" id="contenido" class=" form-control h-50" cols="30" rows="10"></textarea>
+          <label class="form-label" for="contenido">
+            Contenido:
+          </label>
+
+        </div>
+      </section>
+      <input type="submit" class="btn btn-primary" value="Send data">
+      <?php if ($postMessageStatus !== '') : ?>
+        <small class="<?= $postMessageStatus["status"] ?>">
+          <?= $postMessageStatus["post"] ?>
+        </small>
+      <?php endif; ?>
+      <script src="/assets/js/editMarkdown.js" type="module" defer></script>
     </div>
   </form>
+  <section id="errorsPreview" class="mt-3 bg-secondary">
+
+  </section>
+  <script src="/assets/js/form-Validate.js" defer></script>
 </main>

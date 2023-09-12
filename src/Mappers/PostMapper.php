@@ -95,6 +95,7 @@ class PostMapper extends Connection implements MapperInterface
     foreach ($data as $postSTD) {
       $post = new Post();
       $post->setPostId($postSTD->post_id)
+        ->setExtracto($postSTD->extracto)
         ->setUserId($postSTD->user_id)
         ->setImage($postSTD->image ?? null)
         ->setContent($postSTD->content)
@@ -116,19 +117,20 @@ class PostMapper extends Connection implements MapperInterface
   {
 
 
-    $index = $page * self::LIMIT;
-    $stmt = $this->getPdo()->prepare("SELECT * FROM posts LIMIT 10 OFFSET :limit");
+    $index = $page === 1 ? 0 : $page * self::LIMIT;
+    $stmt = $this->getPdo()->prepare("SELECT post_id,user_id,image,Extracto,created_at FROM posts LIMIT 10 OFFSET :limit");
     $stmt->bindParam(":limit", $index);
     $stmt->execute();
     $data = $stmt->fetchAll(PDO::FETCH_OBJ);
     $arrayPost = [];
     foreach ($data as $postSTD) {
       $post = new Post();
-      $post->setPostId($postSTD->post_id);
-      $post->setUserId($postSTD->user_id);
-      $post->setImage($postSTD->image ?? null);
-      $post->setContent($postSTD->content);
-      $post->setCreatedAt($postSTD->created_at);
+      $post->setPostId($postSTD->post_id)
+        ->setUserId($postSTD->user_id)
+        ->setImage($postSTD->image ?? null)
+        // ->setContent($postSTD->content)
+        ->setExtracto($postSTD->Extracto)
+        ->setCreatedAt($postSTD->created_at);
       $arrayPost[] =  $post;
     }
     return $arrayPost;
@@ -144,16 +146,37 @@ class PostMapper extends Connection implements MapperInterface
   {
     $userId = $data->getUserId();
     $content = $data->getContent();
+    $extracto = substr($content, 0, 120);
     $date = $data->getCreatedAt();
     $image = $data->getImage();
-    $stmt = $this->getPdo()->prepare("INSERT INTO posts (user_id, image,content, created_at) VALUES (:user_id, :image,:content, :created_at)");
+    $stmt = $this->getPdo()->prepare("INSERT INTO posts (user_id, image,content,Extracto, created_at) VALUES (:user_id, :image,:content,:extracto, :created_at)");
     $stmt->bindParam(":user_id", $userId);
     $stmt->bindParam(":image", $image);
     $stmt->bindParam(":content", $content);
+    $stmt->bindParam(":extracto", $extracto);
     $createdAt = $date->format("Y-m-d H:i:s");
     $stmt->bindParam(":created_at", $createdAt);
     $results = ["status" => $stmt->execute(), "pk" => $this->getPdo()->lastInsertId()];
     return $results;
+  }
+
+  public function insertCategories(object $data)
+  {
+    $stmt = $this->getPdo()->prepare("INSERT INTO post_category ( id_post, id_category)
+    VALUES ( :id_post, :id_category)");
+    $postId = $data->getPostId();
+    foreach ($data->getCategories() as $category) {
+      if (!is_array($category)) {
+
+        $idCategory = (int)$category->getId();
+        $stmt->bindParam(":id_post", $postId);
+        $stmt->bindParam(":id_category", $idCategory);
+        $stmt->execute();
+      }
+    }
+
+    // $results = ["status" => $stmt->execute(), "pk" => $this->getPdo()->lastInsertId()];
+    return true;
   }
 
   public function update(object $data)

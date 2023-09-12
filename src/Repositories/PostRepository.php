@@ -19,6 +19,11 @@ class PostRepository
     $postStatus = $this->postMapper->insert($data);
     return $postStatus;
   }
+  public function insertCategories(object $data)
+  {
+    $postStatus = $this->postMapper->insertCategories($data);
+    return $postStatus;
+  }
   public function update(object $data)
   {
     $post = $this->postMapper->update($data);

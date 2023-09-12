@@ -12,6 +12,7 @@ class Post
   private $image;
   private $comments;
   private $categories;
+  private $extracto;
   /**
    * Get the value of post_id
    */
@@ -134,6 +135,24 @@ class Post
   public function setCategories($categories): self
   {
     $this->categories = $categories;
+
+    return $this;
+  }
+
+  /**
+   * Get the value of extracto
+   */
+  public function getExtracto()
+  {
+    return $this->extracto;
+  }
+
+  /**
+   * Set the value of extracto
+   */
+  public function setExtracto($extracto): self
+  {
+    $this->extracto = $extracto;
 
     return $this;
   }

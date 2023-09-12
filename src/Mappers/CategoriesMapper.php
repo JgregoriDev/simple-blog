@@ -41,7 +41,7 @@ class CategoriesMapper extends Connection
   }
   public function searchByCategories(Categories $categories): Categories
   {
-    $stmt = $this->getPdo()->prepare("SELECT * FROM categories c
+    $stmt = $this->getPdo()->prepare("SELECT p.Extracto, p.image,p.post_id FROM categories c
     INNER JOIN post_category pc on c.id = pc.id_category
     INNER JOIN posts p on pc.id_post = p.post_id
      WHERE c.id = ?");
@@ -50,8 +50,9 @@ class CategoriesMapper extends Connection
     $arrayPosts = [];
     foreach ($data as $poststd) {
       $post = new Post();
+      $post->setExtracto($poststd->Extracto);
       $post->setPostId($poststd->post_id);
-      $post->setContent($poststd->content);
+      // $post->setContent($poststd->content);
       $post->setImage($poststd->image);
 
       $arrayPosts[] = $post;

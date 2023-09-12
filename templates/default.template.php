@@ -3,24 +3,27 @@
 
   <div class="col col-lg-8 row">
 
-
-    <?php foreach ($posts as $post) : ?>
-      <article class=" col col-md-6 col-lg-4">
-        <?php if ($post->getImage() !== null) : ?>
-          <a href="/post/<?= $post->getPostId() ?>">
-            <img class="article__img" src="<?= $post::IMAGE_PATH . $post->getImage() ?>" alt="<?= $post->getContent() ?>">
-          </a>
-        <?php endif; ?>
-        <a href="/post/<?= $post->getPostId() ?>"><?= $post->getContent() ?></a>
-        <small>Creado por <?= $post?->getUserId() ?></small>
-      </article>
-    <?php endforeach; ?>
+    <?php if (count($posts) === 0) : ?>
+      <h3 class="text-danger">No hay posts con este número de paginación</h3>
+    <?php else : ?>
+      <?php foreach ($posts as $post) : ?>
+        <article class=" col col-md-6 col-lg-4 min-height-275 my-3">
+          <?php if ($post->getImage() !== null) : ?>
+            <a href="/post/<?= $post->getPostId() ?>">
+              <img class="article__img" src="<?= $post::IMAGE_PATH . $post->getImage() ?>" alt="<?= $post->getExtracto() ?>">
+            </a>
+          <?php endif; ?>
+          <a href="/post/<?= $post->getPostId() ?>"><?= $post->getExtracto() ?></a>
+          <small>Creado por <?= $post?->getUserId() ?></small>
+        </article>
+      <?php endforeach; ?>
+    <?php endif; ?>
     <nav aria-label="Page navigation example">
       <ul class="d-flex justify-content-center pagination">
         <?php if ($page > 1) : ?>
           <li class="page-item"><a class="page-link" href="?page=<?= 1 ?>">First</a></li>
+          <li class="page-item"><a class="page-link" href="?page=<?= $pagePreview ?>">Previous</a></li>
         <?php endif; ?>
-        <li class="page-item"><a class="page-link" href="?page=<?= $pagePreview ?>">Previous</a></li>
         <?php
         for ($pageNumber = 1; $pageNumber <= $countMaxSizePage; $pageNumber++) : ?>
           <a class="page-link" href="?page=<?= $pageNumber ?>"><?= $pageNumber ?></a>
