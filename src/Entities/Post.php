@@ -4,7 +4,7 @@ namespace App\Entities;
 
 class Post
 {
-  public const IMAGE_PATH = "/assets/images/";
+  public const IMAGE_PATH = "./assets/images/";
   private $post_id;
   private $user_id;
   private $content;
