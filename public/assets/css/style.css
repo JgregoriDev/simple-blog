@@ -160,3 +160,7 @@ template {
   height: 385px;
   display: inline-block;
 }
+
+.min-height-275 {
+  min-height: 275px;
+}
