@@ -10,8 +10,14 @@
         <article class=" col col-md-6 col-lg-4 min-height-275 my-3">
           <?php if ($post->getImage() !== null) : ?>
             <a href="/post/<?= $post->getPostId() ?>">
-              <img class="article__img" src="<?= $post::IMAGE_PATH . $post->getImage() ?>" alt="<?= $post->getExtracto() ?>">
+
+              <img class="article__img" src="<?= file_exists($post::IMAGE_PATH . $post->getImage()) ?
+                                                $post::IMAGE_PATH . $post->getImage() :
+                                                $post::IMAGE_PATH . "tux.png"
+                                              ?>" alt="<?= $post->getExtracto() ?>">
             </a>
+          <?php else : ?>
+            <img class="article__img" src="<?= $post::IMAGE_PATH . "tux.png" ?>" alt="<?= $post->getExtracto() ?>">
           <?php endif; ?>
           <a href="/post/<?= $post->getPostId() ?>"><?= $post->getExtracto() ?></a>
           <small>Creado por <?= $post?->getUserId() ?></small>

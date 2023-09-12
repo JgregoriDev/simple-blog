@@ -28,7 +28,7 @@ $username = $session->get("username");
       </div>
     <?php else : ?>
       <nav class="">
-        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <button id="" class="btn border-0 dropdown-toggle show-dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
           Bienvenido <?= $username ?>
         </button>
 
