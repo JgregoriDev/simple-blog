@@ -8,7 +8,7 @@
         <input type="file" class="form-control" name="fileToUpload" id="fileToUpload">
         <div class="my-2">
 
-          <img src="" id="preview" class="img-fluid my-2" alt="" srcset="">
+          <img loading="lazy" src="" id="preview" class="img-fluid my-2" alt="" srcset="">
         </div>
       </div>
       <div class="mb-3">

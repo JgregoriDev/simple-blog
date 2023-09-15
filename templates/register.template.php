@@ -8,7 +8,7 @@ use Gregwar\Captcha\CaptchaBuilder; ?>
     <div class="form__container"><label for="passwordA">Password:</label><input type="password" name="passwordA" id="passwordA" class=""></div>
     <div class="form__container"><label for="passwordB">Repeat the password:</label><input type="password" name="passwordB" id="passwordB" class=""></div>
     <div class="">
-      <img src="<?= $builder->inline() ?>" />
+      <img loading="lazy" src="<?= $builder->inline() ?>" />
       <input class="" type="text" name="captcha" value="<?= $phraseNew ?>">
     </div>
     <div>

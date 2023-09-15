@@ -7,6 +7,7 @@ use App\Config\Interfaces\MapperInterface;
 use App\Entities\Categories;
 use App\Entities\Comment;
 use App\Entities\Post;
+use DateTimeImmutable;
 use PDO;
 use PDOException;
 
@@ -189,5 +190,24 @@ class PostMapper extends Connection implements MapperInterface
     $stmt->bindParam(":id", $data->id);
     $stmt->execute();
   }
-  # code...
+
+  public function searchPost(string $data)
+  {
+    $dataConsulta = $data;
+
+    $stmt = $this->getPdo()->prepare("SELECT post_id, Extracto, created_at FROM posts WHERE content LIKE CONCAT('%', :content, '%')");
+    $stmt->bindParam(":content", $dataConsulta);
+    $stmt->execute();
+    $arrayOfPosts = $stmt->FetchAll(PDO::FETCH_OBJ);
+    $arrayAux = [];
+    foreach ($arrayOfPosts as $postDB) {
+      $post = new Post();
+      $post->setPostId($postDB->post_id)
+        ->setExtracto($postDB->Extracto)
+        ->setCreatedAt(new DateTimeImmutable($postDB->created_at));
+      $arrayAux[] = $post;
+    }
+
+    return $arrayAux;
+  }
 }

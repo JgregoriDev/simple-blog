@@ -24,7 +24,6 @@ class UserMapper extends Connection
     $stmt->bindParam(":username", $data);
     $stmt->execute();
     $userSTD = $stmt->fetch(PDO::FETCH_OBJ);
-    var_dump($userSTD);
     $user = new User();
     $user->setUsername($userSTD->username);
     $user->setPasswordHash($userSTD->password_hash);

@@ -58,4 +58,8 @@ class PostRepository
   {
     return $this->postMapper->findPostsGenres($post);
   }
+  public function searchPost(string $data)
+  {
+    return $this->postMapper->searchPost($data);
+  }
 }

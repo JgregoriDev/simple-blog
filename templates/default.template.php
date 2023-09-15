@@ -11,13 +11,15 @@
           <?php if ($post->getImage() !== null) : ?>
             <a href="/post/<?= $post->getPostId() ?>">
 
-              <img class="article__img" src="<?= file_exists($post::IMAGE_PATH . $post->getImage()) ?
-                                                $post::IMAGE_PATH . $post->getImage() :
-                                                $post::IMAGE_PATH . "tux.png"
-                                              ?>" alt="<?= $post->getExtracto() ?>">
+              <img loading="lazy" class="article__img" src="<?= file_exists($post::IMAGE_PATH . $post->getImage()) ?
+                                                              $post::IMAGE_PATH . $post->getImage() :
+                                                              $post::IMAGE_PATH . "tux.png"
+                                                            ?>" alt="<?= $post->getExtracto() ?>">
             </a>
           <?php else : ?>
-            <img class="article__img" src="<?= $post::IMAGE_PATH . "tux.png" ?>" alt="<?= $post->getExtracto() ?>">
+            <a href="/post/<?= $post->getPostId() ?>">
+              <img loading="lazy" class="article__img" src="<?= $post::IMAGE_PATH . "tux.png" ?>" alt="<?= $post->getExtracto() ?>">
+            </a>
           <?php endif; ?>
           <a href="/post/<?= $post->getPostId() ?>"><?= $post->getExtracto() ?></a>
           <small>Creado por <?= $post?->getUserId() ?></small>

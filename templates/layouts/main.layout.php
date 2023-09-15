@@ -21,6 +21,11 @@ $username = $session->get("username");
   <header class="header">
 
     <h1 class="header__title"><a class="title" href="/">Blog de ejemplo</a></h1>
+    <div>
+      <button id="bBuscar" class="bBuscar btn border-0" title="Buscar">
+        <img loading="lazy" src="http://<?= htmlspecialchars($_SERVER['HTTP_HOST']) ?>/assets/icons/search.png" alt="" srcset="">
+      </button>
+    </div>
     <?php if ($username === '') : ?>
       <div class="header__action">
         <a href="/login">Login</a>
@@ -42,12 +47,19 @@ $username = $session->get("username");
     <?php endif; ?>
   </header>
   <main class="container">
+    <div id="containerSearch" class="mb-3 d-none">
+      <label for="" class="form-label">Buscar</label>
+      <form action="http://<?= htmlspecialchars($_SERVER['HTTP_HOST']) ?>/post/search" class="d-flex gap-2" method="get">
 
+        <input type="text" class="form-control" name="q" id="q" aria-describedby="helpId" placeholder="Buscar post">
+        <button type="button" name="" id="" class="btn btn-primary">Buscar</button>
+      </form>
+    </div>
     <?= $content ?>
   </main>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
-
+  <script src="http://<?= htmlspecialchars($_SERVER['HTTP_HOST']) ?>/assets/js/ShowSearchBar.js" defer></script>
 </body>
 
 </html>

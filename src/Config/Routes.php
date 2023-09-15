@@ -10,7 +10,7 @@ $routes->add(
   'default',
   new Route(
     path: '/',
-    defaults: ['_controller' => 'App\Controller\DefaultController::index'],
+    defaults: ['_controller' => 'App\Controller\DefaultController::mainPage'],
     methods: ["GET", "POST"],
   )
 );
@@ -23,7 +23,16 @@ $routes->add(
   )
 );
 $routes->add(
-  'post_find',
+  'search_Post',
+  new Route(
+    path: '/post/search',
+    defaults: ['_controller' => 'App\Controller\DefaultController::postSearch'],
+    methods: ["GET"],
+  )
+);
+
+$routes->add(
+  'getPostByID',
   new Route(
     path: '/post/{id}',
     defaults: ['_controller' => 'App\Controller\DefaultController::getPost'],
@@ -66,49 +75,11 @@ $routes->add(
   'categoryListPost',
   new Route(
     path: '/category/{slug}',
-    defaults: ['_controller' => 'App\Controller\CategoryController::index'],
+    defaults: ['_controller' => 'App\Controller\CategoryController::listPostByCategory'],
     methods: ["GET", "POST"],
   )
 );
-// $routes->add(
-//   'findUser',
-//   new Route(
-//     path: '/user/{uuid}',
-//     defaults: ['_controller' => 'App\Controller\UserController::findUser'],
-//     methods: ["GET"]
-//   )
-// );
-// $routes->add(
-//   'findAllUsers',
-//   new Route(
-//     path: '/users',
-//     defaults: ['_controller' => 'App\Controller\UserController::findAllUsers'],
-//     methods: ["GET"]
-//   )
-// );
-// $routes->add(
-//   'newUser',
-//   new Route(
-//     path: '/user/new',
-//     defaults: ['_controller' => 'App\Controller\UserController::createUser'],
-//     methods: ["POST"]
-//   )
-// );
-// $routes->add(
-//   'updateUser',
-//   new Route(
-//     path: '/user/{uuid}',
-//     defaults: ['_controller' => 'App\Controller\UserController::updateUser'],
-//     methods: ["PUT"]
-//   )
-// );
-// $routes->add(
-//   'deleteUser',
-//   new Route(
-//     path: '/login',
-//     defaults: ['_controller' => 'App\Controller\LoginController::login'],
-//     methods: ["GET"]
-//   )
-// );
+
+
 
 return $routes;

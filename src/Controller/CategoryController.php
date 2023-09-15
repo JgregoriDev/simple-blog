@@ -15,7 +15,7 @@ class CategoryController
   {
     $this->categoryRepository = new CategoriesRepository(new CategoriesMapper());
   }
-  public function index(string $slug)
+  public function listPostByCategory(string $slug)
   {
     $category = $this->categoryRepository->getCategory($slug);
     $category = $this->categoryRepository->searchByCategories($category);

@@ -24,7 +24,7 @@ class DefaultController
     $postMapper = new PostMapper();
     $this->postRepository = new PostRepository($postMapper);
   }
-  public function index(Request $request)
+  public function mainPage(Request $request)
   {
     $categoryRepository = new CategoriesRepository(new CategoriesMapper());
     $categories = $categoryRepository->getAllCategories();
@@ -40,7 +40,8 @@ class DefaultController
     }
     $hi = "Hello world";
 
-    $username = $_SESSION["username"] ?? "";
+    $session = Registry::get(Registry::SESSION);
+    $username = $session->get("username") ?? "";
     $count = $this->postRepository->countArray();
     $countMaxSizePage = ($count / 10);
     $posts = $this->postRepository->findByPage($page);
@@ -83,7 +84,8 @@ class DefaultController
   public function deletePost(Request $request, int $id)
   {
     session_start();
-    $username = $_SESSION["username"] ?? "";
+    $session = Registry::get(Registry::SESSION);
+    $username = $session->get("username") ?? "";
     $std = new stdClass();
     $std->id = $id;
     $this->postRepository->delete($std);
@@ -161,6 +163,23 @@ class DefaultController
       }
     }
     $content = Content::setContent('post-form', 'main', compact('username', 'categories', 'post', 'postMessageStatus'));
+
+    return new Response($content);
+  }
+  public function postSearch(Request $request)
+  {
+    $session = Registry::get(Registry::SESSION);
+    $username = $session->get("username") ?? "";
+    $username = $request->get("q") ?? "";
+
+    $post = new Post();
+    $postStringSearch = trim($request->get('q')) ?? false;
+
+
+    $arrayPostsBusqueda = $this->postRepository->searchPost($postStringSearch);
+
+    $content = Content::setContent('search', 'main', compact('username', "postStringSearch", 'arrayPostsBusqueda'));
+
 
     return new Response($content);
   }
