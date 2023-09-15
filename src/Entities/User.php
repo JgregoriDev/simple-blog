@@ -115,7 +115,6 @@ class User
    */
   public function setRole($role): self
   {
-    var_dump(json_encode($role, true));
     $this->role = json_encode($role);
 
     return $this;

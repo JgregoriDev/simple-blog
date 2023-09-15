@@ -21,18 +21,21 @@ $username = $session->get("username");
   <header class="header">
 
     <h1 class="header__title"><a class="title" href="/">Blog de ejemplo</a></h1>
-    <div>
-      <button id="bBuscar" class="bBuscar btn border-0" title="Buscar">
-        <img loading="lazy" src="http://<?= htmlspecialchars($_SERVER['HTTP_HOST']) ?>/assets/icons/search.png" alt="" srcset="">
-      </button>
-    </div>
+
+
     <?php if ($username === '') : ?>
       <div class="header__action">
+        <button id="bBuscar" class="bBuscar btn border-0" title="Buscar">
+          <img loading="lazy" src="http://<?= htmlspecialchars($_SERVER['HTTP_HOST']) ?>/assets/icons/search.png" alt="" srcset="">
+        </button>
         <a href="/login">Login</a>
         <a href="/registrar">Registrar</a>
       </div>
     <?php else : ?>
       <nav class="">
+        <button id="bBuscar" class="bBuscar btn border-0" title="Buscar">
+          <img loading="lazy" src="http://<?= htmlspecialchars($_SERVER['HTTP_HOST']) ?>/assets/icons/search.png" alt="" srcset="">
+        </button>
         <button id="" class="btn border-0 dropdown-toggle show-dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
           Bienvenido <?= $username ?>
         </button>
