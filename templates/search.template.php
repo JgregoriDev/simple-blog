@@ -2,7 +2,7 @@
   <div class="my-3">
 
     <h3>Buscar post con título <?= $postStringSearch ?></h3>
-    <p>Resultados de busqueda <?= count($arrayPostsBusqueda) ?></p>
+    <p>Resultados de la busqueda encontrados <?= count($arrayPostsBusqueda) ?></p>
   </div>
   <?php if ($postStringSearch === false || count($arrayPostsBusqueda) === 0) : ?>
     <div class="my-3">

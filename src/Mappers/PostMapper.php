@@ -193,21 +193,21 @@ class PostMapper extends Connection implements MapperInterface
 
   public function searchPost(string $data)
   {
-    $dataConsulta = $data;
-
-    $stmt = $this->getPdo()->prepare("SELECT post_id, Extracto, created_at FROM posts WHERE content LIKE CONCAT('%', :content, '%')");
-    $stmt->bindParam(":content", $dataConsulta);
+    $stmt = $this->getPdo()->prepare("SELECT post_id, Extracto, created_at FROM posts
+    WHERE content
+    LIKE CONCAT('%', :content, '%')");
+    $stmt->bindParam(":content", $data);
     $stmt->execute();
-    $arrayOfPosts = $stmt->FetchAll(PDO::FETCH_OBJ);
-    $arrayAux = [];
+    $arrayOfPosts = $stmt->fetchAll(PDO::FETCH_OBJ);
+    $posts = [];
     foreach ($arrayOfPosts as $postDB) {
       $post = new Post();
       $post->setPostId($postDB->post_id)
         ->setExtracto($postDB->Extracto)
         ->setCreatedAt(new DateTimeImmutable($postDB->created_at));
-      $arrayAux[] = $post;
+      $posts[] = $post;
     }
 
-    return $arrayAux;
+    return $posts;
   }
 }
